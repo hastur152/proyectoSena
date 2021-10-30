@@ -15,6 +15,22 @@
       $user = $results;
     }
   }
+
+  $server='localhost';
+  $username = 'root';
+  $password='';
+  $database='asistencia';
+
+  try {
+      $conn1= new PDO("mysql:host=$server;dbname=$database;",$username,$password);
+  } catch (PDOException $e) {
+      die('connected failed: '.$e->getMessage());
+  }
+
+  //consulta
+  $consulta = "SELECT * FROM asistencia ";
+  $guardar = $conn1->query($consulta);
+
 ?>
 
 
@@ -56,7 +72,7 @@
       </header>
      <?php endif; ?> 
      <!-- ACA TERMINA EL MENU DE NAVEGACION -->
-
+<!-- 
     <form action="">
 
         <h2>ASISTENCIA</h2>
@@ -69,6 +85,49 @@
         <textarea name="mensaje" placeholder="¿alguna observacion?" ></textarea>
         <input type="button" value="ENVIAR" id="boton">
 
-    </form>
+    </form> -->
+
+    <div class="container-tabla">
+
+      <h2>TABLA ASISTENCIA DINAMICA</h2>
+        <div class="table-responsive table-hover" id="tabla-consulta">
+
+          <table class="table">
+
+              <thead >
+              <th >codigo</th>
+                <th >nombres</th>
+                <th >apellidos</th>
+                <th >Asistencia</th>
+                </thead>
+                <tbody>
+                  <?php while($row=$guardar->fetch()){?>
+                  <tr>
+                    <td><?php echo $row['codigo']; ?></td>
+                    <td><?php echo $row['nombres']; ?></td>
+                    <td><?php echo $row['apellidos']; ?></td>
+                    <td><?php echo $row['asistencia']; ?></td>
+
+
+
+                  </tr>
+                  <?php } ?>
+
+                </tbody>
+          
+
+
+            </table>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
 </body>
 </html>
